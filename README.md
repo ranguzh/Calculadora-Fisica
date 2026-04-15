@@ -7,14 +7,14 @@
 ---
 
 ## 🚀 Demo en vivo
-👉 https://TU-VERCEL-URL.vercel.app
+👉 https://vercel.com/ranguzh-3348s-projects/calculadora-fisica-pdtj
 
 ---
 
 ## 🎯 Vista previa
 
 <p align="center">
-  <img src="https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif" width="600"/>
+  <img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif" width="600"/>
 </p>
 
 ---
@@ -23,18 +23,18 @@
 
 Proyecto interactivo desarrollado para resolver problemas de **Física II** mediante una interfaz web moderna.
 
-Permite calcular de forma rápida y visual:
+Permite calcular:
 
-- 🔌 Circuitos eléctricos
-- ⚡ Ley de Ohm
-- 🧲 Ley de Coulomb
-- 🔋 Capacitores
-- 📊 Potencia eléctrica
-- 🧠 Conductividad de materiales
+- 🔌 Circuitos eléctricos  
+- ⚡ Ley de Ohm  
+- 🧲 Ley de Coulomb  
+- 🔋 Capacitores  
+- 📊 Potencia eléctrica  
+- 🧠 Conductividad de materiales  
 
 ---
 
-## 🧠 Características
+## 🧠 Tecnologías
 
 <p align="center">
 
@@ -45,15 +45,9 @@ Permite calcular de forma rápida y visual:
 
 </p>
 
-✔ Interfaz moderna tipo dashboard  
-✔ Cálculos en tiempo real  
-✔ Sistema por pestañas  
-✔ Resultados dinámicos  
-✔ Diseño responsive  
-
 ---
 
-## 📐 Fórmulas implementadas
+## 📐 Fórmulas
 
 ```txt
 V = I · R
