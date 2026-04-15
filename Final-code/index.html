@@ -3,15 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Análisis de Circuitos y Conductividad — Herramienta Profesional</title>
+  <title>Calculadora Interactiva para el Análisis de Circuitos Eléctricos y Conductividad de Materiales</title>
   <style>
     :root {
-      /* Paleta de colores profesional y oscura */
       --bg-main: #0a0a0c;
       --bg-card: #141417;
       --bg-input: #1c1c21;
       --border: #2d2d35;
-      --accent: #3b82f6; /* Azul profesional */
+      --accent: #3b82f6;
       --accent-hover: #2563eb;
       --text-primary: #f8fafc;
       --text-secondary: #94a3b8;
@@ -19,7 +18,7 @@
       --success: #10b981;
       --warning: #f59e0b;
       --error: #ef4444;
-      --radius: 4px; /* Bordes más rectos para minimalismo */
+      --radius: 4px;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,22 +33,74 @@
 
     /* ── HEADER ── */
     header {
-      padding: 3rem 1rem 2rem;
+      padding: 2.5rem 1rem 1.5rem;
       text-align: center;
-      max-width: 800px;
+      max-width: 860px;
       margin: 0 auto;
     }
 
+    .header-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+    }
+
     header h1 {
-      font-size: 1.75rem;
-      font-weight: 500;
-      letter-spacing: -0.025em;
+      font-size: clamp(1.05rem, 2.8vw, 1.55rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.35;
       margin-bottom: 0.5rem;
     }
 
-    header p {
+
+    /* ── ACCESOS RÁPIDOS (4 secciones del banner) ── */
+    .highlight-strip {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      max-width: 860px;
+      margin: 1.5rem auto 0;
+      padding: 0 1.5rem 2rem;
+    }
+
+    .hl-chip {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: #16161c;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 9px 16px;
+      font-size: 0.78rem;
+      font-weight: 600;
       color: var(--text-secondary);
-      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.18s;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      user-select: none;
+    }
+
+    .hl-chip:hover {
+      border-color: var(--accent);
+      color: var(--text-primary);
+      background: #1a1a24;
+    }
+
+    .hl-chip .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
     }
 
     /* ── LAYOUT ── */
@@ -86,23 +137,20 @@
     }
 
     .tab:hover { color: var(--text-primary); }
-    .tab.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-    }
+    .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
     /* ── PANELS ── */
     .panel { display: none; }
-    .panel.active { 
+    .panel.active {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
       gap: 1.5rem;
-      animation: fadeIn 0.3s ease-out;
+      animation: fadeIn 0.25s ease-out;
     }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     /* ── CARDS ── */
@@ -115,6 +163,10 @@
       flex-direction: column;
     }
 
+    .card.featured {
+      border-left: 3px solid var(--accent);
+    }
+
     .card h3 {
       font-size: 1rem;
       font-weight: 600;
@@ -122,10 +174,12 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
     }
 
     .unit-badge {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--text-muted);
@@ -147,7 +201,7 @@
     /* ── FORM ELEMENTS ── */
     .field-group { margin-bottom: 1.25rem; }
     .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; }
-    
+
     label {
       display: block;
       font-size: 0.75rem;
@@ -174,7 +228,7 @@
 
     input:focus, select:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+      box-shadow: 0 0 0 2px rgba(59,130,246,0.1);
     }
 
     /* ── BUTTONS ── */
@@ -190,8 +244,8 @@
       transition: background 0.2s;
       width: 100%;
     }
-
     .btn:hover { background: var(--accent-hover); }
+
     .btn-secondary {
       background: transparent;
       border: 1px solid var(--border);
@@ -210,8 +264,8 @@
       border: 1px solid var(--border);
       display: none;
     }
-    .result.show { display: block; animation: fadeIn 0.3s ease-out; }
-    
+    .result.show { display: block; animation: fadeIn 0.25s ease-out; }
+
     .result-value {
       font-size: 1.5rem;
       font-weight: 600;
@@ -237,46 +291,56 @@
       border-radius: var(--radius);
     }
     .mat-name { font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.5rem; }
-    .mat-val { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); }
+    .mat-val  { font-size: 1.05rem; font-weight: 600; color: var(--text-primary); }
     .mat-unit { font-size: 0.65rem; color: var(--text-muted); }
     .mat-type { font-size: 0.65rem; margin-top: 0.5rem; font-weight: 500; }
-    
     .cond { color: var(--success); }
     .semi { color: var(--warning); }
     .ins  { color: var(--error); }
 
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      .panel { grid-template-columns: 1fr; }
-      header h1 { font-size: 1.5rem; }
+      .panel.active { grid-template-columns: 1fr; }
+      .field-row { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>Herramienta de Análisis Eléctrico</h1>
-  <p>Cálculos de circuitos y propiedades de materiales</p>
+  <div class="header-badge"></div>
+  <h1>Calculadora Interactiva para el Análisis de Circuitos Eléctricos y Conductividad de Materiales</h1>
 </header>
 
+<!-- ACCESOS RÁPIDOS — 4 secciones del banner -->
+<div class="highlight-strip">
+  <div class="hl-chip" onclick="jumpTab('ohm')"><span class="dot"></span>Análisis de Circuitos</div>
+  <div class="hl-chip" onclick="jumpTab('ohm')"><span class="dot"></span>Ley de Ohm</div>
+  <div class="hl-chip" onclick="jumpTab('potencia')"><span class="dot"></span>Potencia Eléctrica</div>
+  <div class="hl-chip" onclick="jumpTab('materiales')"><span class="dot"></span>Conductividad de Materiales</div>
+</div>
+
 <div class="container">
+
+  <!-- TABS -->
   <div class="tabs-container">
     <div class="tabs">
       <div class="tab active" onclick="showTab('ohm',this)">Ley de Ohm</div>
-      <div class="tab" onclick="showTab('coulomb',this)">Electrostática</div>
-      <div class="tab" onclick="showTab('campo',this)">Campo Eléctrico</div>
-      <div class="tab" onclick="showTab('potencial',this)">Potencial</div>
-      <div class="tab" onclick="showTab('capacitor',this)">Capacitores</div>
-      <div class="tab" onclick="showTab('kirchhoff',this)">Kirchhoff</div>
-      <div class="tab" onclick="showTab('potencia',this)">Potencia</div>
-      <div class="tab" onclick="showTab('materiales',this)">Conductividad</div>
+      <div class="tab"        onclick="showTab('coulomb',this)">Electrostática</div>
+      <div class="tab"        onclick="showTab('campo',this)">Campo Eléctrico</div>
+      <div class="tab"        onclick="showTab('potencial',this)">Potencial</div>
+      <div class="tab"        onclick="showTab('capacitor',this)">Capacitores</div>
+      <div class="tab"        onclick="showTab('kirchhoff',this)">Kirchhoff</div>
+      <div class="tab"        onclick="showTab('potencia',this)">Potencia Eléctrica</div>
+      <div class="tab"        onclick="showTab('materiales',this)">Conductividad</div>
     </div>
   </div>
 
-  <!-- ═══════════════ OHM ═══════════════ -->
+  <!-- ═══ LEY DE OHM / ANÁLISIS DE CIRCUITOS ═══ -->
   <div class="panel active" id="panel-ohm">
-    <div class="card">
-      <h3>Cálculo de Ley de Ohm <span class="unit-badge">Unidad VI</span></h3>
+    <div class="card featured">
+      <h3>Ley de Ohm <span class="unit-badge">Análisis de Circuitos · Unidad VI</span></h3>
       <div class="formula">V = I · R</div>
       <div class="field-group">
         <label>Parámetro a calcular</label>
@@ -287,18 +351,19 @@
         </select>
       </div>
       <div class="field-row">
-        <div class="field"><label id="ohm-l1">Corriente (A)</label><input type="number" id="ohm-a" step="any"></div>
-        <div class="field"><label id="ohm-l2">Resistencia (Ω)</label><input type="number" id="ohm-b" step="any"></div>
+        <div><label id="ohm-l1">Corriente (A)</label><input type="number" id="ohm-a" step="any" placeholder="ej: 2"></div>
+        <div><label id="ohm-l2">Resistencia (Ω)</label><input type="number" id="ohm-b" step="any" placeholder="ej: 10"></div>
       </div>
-      <button class="btn" onclick="calcOhm()">Ejecutar cálculo</button>
+      <button class="btn" onclick="calcOhm()">Calcular</button>
       <div class="result" id="ohm-res"><div class="result-value" id="ohm-val"></div><div class="result-label" id="ohm-lbl"></div></div>
     </div>
-    <div class="card">
-      <h3>Asociación de Resistencias <span class="unit-badge">Unidad VI</span></h3>
-      <div class="formula">R_eq (Serie) = ΣRᵢ | R_eq (Paralelo) = 1/Σ(1/Rᵢ)</div>
+
+    <div class="card featured">
+      <h3>Resistencias en Serie y Paralelo <span class="unit-badge">Análisis de Circuitos · Unidad VI</span></h3>
+      <div class="formula">Serie: R_eq = ΣRᵢ &nbsp;|&nbsp; Paralelo: 1/R_eq = Σ(1/Rᵢ)</div>
       <div class="field-group">
-        <label>Valores (separados por coma)</label>
-        <input type="text" id="res-list" placeholder="10, 22, 47">
+        <label>Valores separados por coma (Ω)</label>
+        <input type="text" id="res-list" placeholder="ej: 10, 22, 47">
       </div>
       <div class="btn-row">
         <button class="btn btn-secondary" onclick="calcSerie()">Serie</button>
@@ -308,32 +373,33 @@
     </div>
   </div>
 
-  <!-- ═══════════════ COULOMB ═══════════════ -->
+  <!-- ═══ ELECTROSTÁTICA ═══ -->
   <div class="panel" id="panel-coulomb">
     <div class="card">
       <h3>Ley de Coulomb <span class="unit-badge">Unidad I</span></h3>
       <div class="formula">F = k · |q₁ · q₂| / r²</div>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:1rem">k = 8.99 × 10⁹ N·m²/C²</p>
       <div class="field-row">
-        <div class="field"><label>Carga q₁ (C)</label><input type="number" id="cou-q1" step="any"></div>
-        <div class="field"><label>Carga q₂ (C)</label><input type="number" id="cou-q2" step="any"></div>
+        <div><label>Carga q₁ (C)</label><input type="number" id="cou-q1" step="any" placeholder="ej: 1e-6"></div>
+        <div><label>Carga q₂ (C)</label><input type="number" id="cou-q2" step="any" placeholder="ej: -2e-6"></div>
       </div>
       <div class="field-group">
         <label>Distancia r (m)</label>
-        <input type="number" id="cou-r" step="any">
+        <input type="number" id="cou-r" step="any" placeholder="ej: 0.05">
       </div>
-      <button class="btn" onclick="calcCoulomb()">Calcular fuerza</button>
+      <button class="btn" onclick="calcCoulomb()">Calcular Fuerza</button>
       <div class="result" id="cou-res"><div class="result-value" id="cou-val"></div><div class="result-label" id="cou-lbl"></div></div>
     </div>
   </div>
 
-  <!-- ═══════════════ CAMPO ═══════════════ -->
+  <!-- ═══ CAMPO ELÉCTRICO ═══ -->
   <div class="panel" id="panel-campo">
     <div class="card">
-      <h3>Campo Eléctrico <span class="unit-badge">Unidad II</span></h3>
+      <h3>Campo Eléctrico — Carga Puntual <span class="unit-badge">Unidad II</span></h3>
       <div class="formula">E = k · |q| / r²</div>
       <div class="field-row">
-        <div class="field"><label>Carga fuente q (C)</label><input type="number" id="ce-q" step="any"></div>
-        <div class="field"><label>Distancia r (m)</label><input type="number" id="ce-r" step="any"></div>
+        <div><label>Carga fuente q (C)</label><input type="number" id="ce-q" step="any" placeholder="ej: 5e-9"></div>
+        <div><label>Distancia r (m)</label><input type="number" id="ce-r" step="any" placeholder="ej: 0.1"></div>
       </div>
       <button class="btn" onclick="calcCampo()">Calcular Campo</button>
       <div class="result" id="ce-res"><div class="result-value" id="ce-val"></div><div class="result-label" id="ce-lbl"></div></div>
@@ -342,41 +408,41 @@
       <h3>Aceleración en Campo Uniforme <span class="unit-badge">Unidad II</span></h3>
       <div class="formula">a = |q| · E / m</div>
       <div class="field-row">
-        <div class="field"><label>Carga q (C)</label><input type="number" id="mp-q" step="any"></div>
-        <div class="field"><label>Masa m (kg)</label><input type="number" id="mp-m" step="any"></div>
+        <div><label>Carga q (C)</label><input type="number" id="mp-q" step="any" placeholder="ej: 1.6e-19"></div>
+        <div><label>Masa m (kg)</label><input type="number" id="mp-m" step="any" placeholder="ej: 9.11e-31"></div>
       </div>
-      <div class="field-group"><label>Campo E (N/C)</label><input type="number" id="mp-e" step="any"></div>
-      <button class="btn" onclick="calcMovPart()">Calcular aceleración</button>
+      <div class="field-group"><label>Campo E (N/C)</label><input type="number" id="mp-e" step="any" placeholder="ej: 1000"></div>
+      <button class="btn" onclick="calcMovPart()">Calcular Aceleración</button>
       <div class="result" id="mp-res"><div class="result-value" id="mp-val"></div><div class="result-label" id="mp-lbl"></div></div>
     </div>
   </div>
 
-  <!-- ═══════════════ POTENCIAL ═══════════════ -->
+  <!-- ═══ POTENCIAL ═══ -->
   <div class="panel" id="panel-potencial">
     <div class="card">
       <h3>Potencial Eléctrico <span class="unit-badge">Unidad IV</span></h3>
       <div class="formula">V = k · q / r</div>
       <div class="field-row">
-        <div class="field"><label>Carga q (C)</label><input type="number" id="pot-q" step="any"></div>
-        <div class="field"><label>Distancia r (m)</label><input type="number" id="pot-r" step="any"></div>
+        <div><label>Carga q (C)</label><input type="number" id="pot-q" step="any" placeholder="ej: 2e-9"></div>
+        <div><label>Distancia r (m)</label><input type="number" id="pot-r" step="any" placeholder="ej: 0.3"></div>
       </div>
       <button class="btn" onclick="calcPotencial()">Calcular V</button>
       <div class="result" id="pot-res"><div class="result-value" id="pot-val"></div><div class="result-label" id="pot-lbl"></div></div>
     </div>
     <div class="card">
-      <h3>Energía Potencial <span class="unit-badge">Unidad IV</span></h3>
+      <h3>Energía Potencial Eléctrica <span class="unit-badge">Unidad IV</span></h3>
       <div class="formula">U = k · q₁ · q₂ / r</div>
       <div class="field-row">
-        <div class="field"><label>Carga q₁ (C)</label><input type="number" id="ep-q1" step="any"></div>
-        <div class="field"><label>Carga q₂ (C)</label><input type="number" id="ep-q2" step="any"></div>
+        <div><label>Carga q₁ (C)</label><input type="number" id="ep-q1" step="any" placeholder="ej: 1e-9"></div>
+        <div><label>Carga q₂ (C)</label><input type="number" id="ep-q2" step="any" placeholder="ej: 1e-9"></div>
       </div>
-      <div class="field-group"><label>Distancia r (m)</label><input type="number" id="ep-r" step="any"></div>
+      <div class="field-group"><label>Distancia r (m)</label><input type="number" id="ep-r" step="any" placeholder="ej: 0.2"></div>
       <button class="btn" onclick="calcEnergiaPot()">Calcular Energía</button>
       <div class="result" id="ep-res"><div class="result-value" id="ep-val"></div><div class="result-label" id="ep-lbl"></div></div>
     </div>
   </div>
 
-  <!-- ═══════════════ CAPACITOR ═══════════════ -->
+  <!-- ═══ CAPACITORES ═══ -->
   <div class="panel" id="panel-capacitor">
     <div class="card">
       <h3>Parámetros de Capacitancia <span class="unit-badge">Unidad V</span></h3>
@@ -390,26 +456,26 @@
         </select>
       </div>
       <div class="field-row">
-        <div class="field"><label id="cap-l1">Carga Q (C)</label><input type="number" id="cap-a" step="any"></div>
-        <div class="field"><label id="cap-l2">Voltaje V (V)</label><input type="number" id="cap-b" step="any"></div>
+        <div><label id="cap-l1">Carga Q (C)</label><input type="number" id="cap-a" step="any" placeholder="ej: 1e-6"></div>
+        <div><label id="cap-l2">Voltaje V (V)</label><input type="number" id="cap-b" step="any" placeholder="ej: 12"></div>
       </div>
       <button class="btn" onclick="calcCap()">Calcular</button>
       <div class="result" id="cap-res"><div class="result-value" id="cap-val"></div><div class="result-label" id="cap-lbl"></div></div>
     </div>
     <div class="card">
-      <h3>Energía Almacenada <span class="unit-badge">Unidad V</span></h3>
+      <h3>Energía Almacenada en Capacitor <span class="unit-badge">Unidad V</span></h3>
       <div class="formula">U = ½ · C · V²</div>
       <div class="field-row">
-        <div class="field"><label>Capacitancia C (F)</label><input type="number" id="uc-c" step="any"></div>
-        <div class="field"><label>Voltaje V (V)</label><input type="number" id="uc-v" step="any"></div>
+        <div><label>Capacitancia C (F)</label><input type="number" id="uc-c" step="any" placeholder="ej: 100e-6"></div>
+        <div><label>Voltaje V (V)</label><input type="number" id="uc-v" step="any" placeholder="ej: 12"></div>
       </div>
       <button class="btn" onclick="calcEnCap()">Calcular Energía</button>
       <div class="result" id="uc-res"><div class="result-value" id="uc-val"></div><div class="result-label" id="uc-lbl"></div></div>
     </div>
     <div class="card">
       <h3>Asociación de Capacitores <span class="unit-badge">Unidad V</span></h3>
-      <div class="formula">Serie: 1/C = Σ(1/Cᵢ) | Paralelo: C = ΣCᵢ</div>
-      <div class="field-group"><label>Valores (separados por coma)</label><input type="text" id="capn-list" placeholder="10e-6, 22e-6"></div>
+      <div class="formula">Serie: 1/C = Σ(1/Cᵢ) &nbsp;|&nbsp; Paralelo: C = ΣCᵢ</div>
+      <div class="field-group"><label>Valores separados por coma (F)</label><input type="text" id="capn-list" placeholder="ej: 10e-6, 22e-6, 47e-6"></div>
       <div class="btn-row">
         <button class="btn btn-secondary" onclick="calcCapSerie()">Serie</button>
         <button class="btn btn-secondary" onclick="calcCapPar()">Paralelo</button>
@@ -418,96 +484,98 @@
     </div>
   </div>
 
-  <!-- ═══════════════ KIRCHHOFF ═══════════════ -->
+  <!-- ═══ KIRCHHOFF ═══ -->
   <div class="panel" id="panel-kirchhoff">
     <div class="card">
-      <h3>Divisor de Voltaje <span class="unit-badge">Unidad VII</span></h3>
+      <h3>Divisor de Voltaje <span class="unit-badge">Análisis de Circuitos · Unidad VII</span></h3>
       <div class="formula">V₂ = Vs · R₂ / (R₁ + R₂)</div>
       <div class="field-row">
-        <div class="field"><label>Voltaje Vs (V)</label><input type="number" id="dv-vs" step="any"></div>
-        <div class="field"><label>R₁ (Ω)</label><input type="number" id="dv-r1" step="any"></div>
+        <div><label>Voltaje fuente Vs (V)</label><input type="number" id="dv-vs" step="any" placeholder="ej: 12"></div>
+        <div><label>R₁ (Ω)</label><input type="number" id="dv-r1" step="any" placeholder="ej: 100"></div>
       </div>
-      <div class="field-group"><label>R₂ (Ω)</label><input type="number" id="dv-r2" step="any"></div>
+      <div class="field-group"><label>R₂ (Ω)</label><input type="number" id="dv-r2" step="any" placeholder="ej: 200"></div>
       <button class="btn" onclick="calcDivisor()">Calcular V₂</button>
       <div class="result" id="dv-res"><div class="result-value" id="dv-val"></div><div class="result-label" id="dv-lbl"></div></div>
     </div>
     <div class="card">
-      <h3>Leyes de Kirchhoff (Lazo Simple) <span class="unit-badge">Unidad VII</span></h3>
-      <div class="formula">ΣV = 0 → I = FEM / ΣR</div>
+      <h3>Leyes de Kirchhoff — Lazo Simple <span class="unit-badge">Análisis de Circuitos · Unidad VII</span></h3>
+      <div class="formula">ΣV = 0 &nbsp;→&nbsp; I = FEM / (R₁ + R₂)</div>
       <div class="field-row">
-        <div class="field"><label>FEM (V)</label><input type="number" id="kv-fem" step="any"></div>
-        <div class="field"><label>R₁ (Ω)</label><input type="number" id="kv-r1" step="any"></div>
+        <div><label>FEM / Fuente (V)</label><input type="number" id="kv-fem" step="any" placeholder="ej: 9"></div>
+        <div><label>R₁ (Ω)</label><input type="number" id="kv-r1" step="any" placeholder="ej: 100"></div>
       </div>
-      <div class="field-group"><label>R₂ (Ω)</label><input type="number" id="kv-r2" step="any"></div>
+      <div class="field-group"><label>R₂ (Ω)</label><input type="number" id="kv-r2" step="any" placeholder="ej: 200"></div>
       <button class="btn" onclick="calcKVL()">Calcular Circuito</button>
       <div class="result" id="kv-res"><div class="result-value" id="kv-val"></div><div class="result-label" id="kv-lbl"></div></div>
     </div>
   </div>
 
-  <!-- ═══════════════ POTENCIA ═══════════════ -->
+  <!-- ═══ POTENCIA ELÉCTRICA ═══ -->
   <div class="panel" id="panel-potencia">
-    <div class="card">
+    <div class="card featured">
       <h3>Potencia Eléctrica <span class="unit-badge">Unidad VI</span></h3>
-      <div class="formula">P = V · I | P = I² · R | P = V² / R</div>
+      <div class="formula">P = V · I &nbsp;|&nbsp; P = I² · R &nbsp;|&nbsp; P = V² / R</div>
       <div class="field-group">
         <label>Modo de cálculo</label>
         <select id="pw-mode" onchange="updatePwLabels(); resetR('pw-res')">
-          <option value="VI">Voltaje y Corriente</option>
-          <option value="IR">Corriente y Resistencia</option>
-          <option value="VR">Voltaje y Resistencia</option>
+          <option value="VI">Voltaje y Corriente → P</option>
+          <option value="IR">Corriente y Resistencia → P</option>
+          <option value="VR">Voltaje y Resistencia → P</option>
         </select>
       </div>
       <div class="field-row">
-        <div class="field"><label id="pw-l1">Voltaje V (V)</label><input type="number" id="pw-a" step="any"></div>
-        <div class="field"><label id="pw-l2">Corriente I (A)</label><input type="number" id="pw-b" step="any"></div>
+        <div><label id="pw-l1">Voltaje V (V)</label><input type="number" id="pw-a" step="any" placeholder="ej: 120"></div>
+        <div><label id="pw-l2">Corriente I (A)</label><input type="number" id="pw-b" step="any" placeholder="ej: 2"></div>
       </div>
       <button class="btn" onclick="calcPotencia()">Calcular Potencia</button>
       <div class="result" id="pw-res"><div class="result-value" id="pw-val"></div><div class="result-label" id="pw-lbl"></div></div>
     </div>
-    <div class="card">
-      <h3>Efecto Joule (Calor) <span class="unit-badge">Unidad VI</span></h3>
+    <div class="card featured">
+      <h3>Efecto Joule — Calor Disipado <span class="unit-badge">Unidad VI</span></h3>
       <div class="formula">Q = I² · R · t</div>
       <div class="field-row">
-        <div class="field"><label>Corriente I (A)</label><input type="number" id="j-i" step="any"></div>
-        <div class="field"><label>Resistencia R (Ω)</label><input type="number" id="j-r" step="any"></div>
+        <div><label>Corriente I (A)</label><input type="number" id="j-i" step="any" placeholder="ej: 3"></div>
+        <div><label>Resistencia R (Ω)</label><input type="number" id="j-r" step="any" placeholder="ej: 10"></div>
       </div>
-      <div class="field-group"><label>Tiempo t (s)</label><input type="number" id="j-t" step="any"></div>
+      <div class="field-group"><label>Tiempo t (s)</label><input type="number" id="j-t" step="any" placeholder="ej: 60"></div>
       <button class="btn" onclick="calcJoule()">Calcular Calor</button>
       <div class="result" id="j-res"><div class="result-value" id="j-val"></div><div class="result-label" id="j-lbl"></div></div>
     </div>
   </div>
 
-  <!-- ═══════════════ MATERIALES ═══════════════ -->
+  <!-- ═══ CONDUCTIVIDAD DE MATERIALES ═══ -->
   <div class="panel" id="panel-materiales">
-    <div class="card">
-      <h3>Conductividad de Materiales <span class="unit-badge">Propiedades</span></h3>
+    <div class="card featured">
+      <h3>Conductividad Eléctrica de Materiales <span class="unit-badge">Unidades I · III · VI</span></h3>
       <div class="mat-grid">
-        <div class="mat-card"><div class="mat-name">Cobre</div><div class="mat-val">5.96e7</div><div class="mat-unit">S/m</div><div class="mat-type cond">Conductor</div></div>
-        <div class="mat-card"><div class="mat-name">Aluminio</div><div class="mat-val">3.77e7</div><div class="mat-unit">S/m</div><div class="mat-type cond">Conductor</div></div>
-        <div class="mat-card"><div class="mat-name">Hierro</div><div class="mat-val">1.00e7</div><div class="mat-unit">S/m</div><div class="mat-type cond">Conductor</div></div>
-        <div class="mat-card"><div class="mat-name">Silicio</div><div class="mat-val">~1e3</div><div class="mat-unit">S/m</div><div class="mat-type semi">Semiconductor</div></div>
-        <div class="mat-card"><div class="mat-name">Agua Sal</div><div class="mat-val">~21.4</div><div class="mat-unit">S/m</div><div class="mat-type semi">Iónico</div></div>
-        <div class="mat-card"><div class="mat-name">Vidrio</div><div class="mat-val">~1e-12</div><div class="mat-unit">S/m</div><div class="mat-type ins">Aislante</div></div>
+        <div class="mat-card"><div class="mat-name">Cobre</div><div class="mat-val">5.96×10⁷</div><div class="mat-unit">S/m</div><div class="mat-type cond">Conductor</div></div>
+        <div class="mat-card"><div class="mat-name">Aluminio</div><div class="mat-val">3.77×10⁷</div><div class="mat-unit">S/m</div><div class="mat-type cond">Conductor</div></div>
+        <div class="mat-card"><div class="mat-name">Hierro</div><div class="mat-val">1.00×10⁷</div><div class="mat-unit">S/m</div><div class="mat-type cond">Conductor</div></div>
+        <div class="mat-card"><div class="mat-name">Silicio</div><div class="mat-val">~1×10³</div><div class="mat-unit">S/m</div><div class="mat-type semi">Semiconductor</div></div>
+        <div class="mat-card"><div class="mat-name">Agua con sal</div><div class="mat-val">~21.4</div><div class="mat-unit">S/m</div><div class="mat-type semi">Conductor iónico</div></div>
+        <div class="mat-card"><div class="mat-name">Agua destilada</div><div class="mat-val">~5.5×10⁻⁶</div><div class="mat-unit">S/m</div><div class="mat-type ins">Muy baja cond.</div></div>
+        <div class="mat-card"><div class="mat-name">Vidrio</div><div class="mat-val">~10⁻¹²</div><div class="mat-unit">S/m</div><div class="mat-type ins">Aislador</div></div>
+        <div class="mat-card"><div class="mat-name">Caucho</div><div class="mat-val">~10⁻¹⁵</div><div class="mat-unit">S/m</div><div class="mat-type ins">Aislador</div></div>
       </div>
     </div>
-    <div class="card">
-      <h3>Resistencia por Geometría <span class="unit-badge">Unidad VI</span></h3>
+    <div class="card featured">
+      <h3>Resistencia por Geometría del Conductor <span class="unit-badge">Unidad VI</span></h3>
       <div class="formula">R = ρ · L / A</div>
       <div class="field-row">
-        <div class="field">
+        <div>
           <label>Material</label>
           <select id="mat-sel" onchange="setRho()">
-            <option value="1.68e-8">Cobre</option>
-            <option value="2.65e-8">Aluminio</option>
-            <option value="1e-7">Hierro</option>
+            <option value="1.68e-8">Cobre (ρ = 1.68×10⁻⁸ Ω·m)</option>
+            <option value="2.65e-8">Aluminio (ρ = 2.65×10⁻⁸ Ω·m)</option>
+            <option value="1e-7">Hierro (ρ = 1×10⁻⁷ Ω·m)</option>
             <option value="custom">Personalizado</option>
           </select>
         </div>
-        <div class="field"><label>Resistividad ρ (Ω·m)</label><input type="number" id="rho-val" value="1.68e-8" step="any"></div>
+        <div><label>Resistividad ρ (Ω·m)</label><input type="number" id="rho-val" value="1.68e-8" step="any"></div>
       </div>
       <div class="field-row">
-        <div class="field"><label>Longitud L (m)</label><input type="number" id="rho-l" step="any"></div>
-        <div class="field"><label>Área A (m²)</label><input type="number" id="rho-a" step="any"></div>
+        <div><label>Longitud L (m)</label><input type="number" id="rho-l" step="any" placeholder="ej: 10"></div>
+        <div><label>Área A (m²)</label><input type="number" id="rho-a" step="any" placeholder="ej: 1e-6"></div>
       </div>
       <button class="btn" onclick="calcResistividad()">Calcular R</button>
       <div class="result" id="rho-res"><div class="result-value" id="rho-val2"></div><div class="result-label" id="rho-lbl"></div></div>
@@ -524,6 +592,13 @@
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.getElementById('panel-' + id).classList.add('active');
     el.classList.add('active');
+  }
+
+  function jumpTab(id) {
+    const map = { ohm: 0, potencia: 6, materiales: 7 };
+    const tabs = document.querySelectorAll('.tab');
+    if (tabs[map[id]]) tabs[map[id]].click();
+    document.querySelector('.container').scrollIntoView({ behavior: 'smooth' });
   }
 
   function resetR(id) { document.getElementById(id).classList.remove('show'); }
@@ -543,39 +618,37 @@
   function getNum(id) { return parseFloat(document.getElementById(id).value); }
   function getStr(id) { return document.getElementById(id).value; }
 
-  // ── ACTUALIZACIÓN DE ETIQUETAS DINÁMICAS ──
   function updateOhmLabels() {
     const t = getStr('ohm-target');
     const l1 = document.getElementById('ohm-l1'), l2 = document.getElementById('ohm-l2');
-    if (t === 'V') { l1.innerText = 'Corriente (A)'; l2.innerText = 'Resistencia (Ω)'; }
-    else if (t === 'I') { l1.innerText = 'Voltaje (V)'; l2.innerText = 'Resistencia (Ω)'; }
-    else { l1.innerText = 'Voltaje (V)'; l2.innerText = 'Corriente (A)'; }
+    if (t === 'V') { l1.textContent = 'Corriente (A)'; l2.textContent = 'Resistencia (Ω)'; }
+    else if (t === 'I') { l1.textContent = 'Voltaje (V)'; l2.textContent = 'Resistencia (Ω)'; }
+    else { l1.textContent = 'Voltaje (V)'; l2.textContent = 'Corriente (A)'; }
   }
 
   function updateCapLabels() {
     const t = getStr('cap-target');
     const l1 = document.getElementById('cap-l1'), l2 = document.getElementById('cap-l2');
-    if (t === 'C') { l1.innerText = 'Carga Q (C)'; l2.innerText = 'Voltaje V (V)'; }
-    else if (t === 'Q') { l1.innerText = 'Capacitancia C (F)'; l2.innerText = 'Voltaje V (V)'; }
-    else { l1.innerText = 'Carga Q (C)'; l2.innerText = 'Capacitancia C (F)'; }
+    if (t === 'C') { l1.textContent = 'Carga Q (C)'; l2.textContent = 'Voltaje V (V)'; }
+    else if (t === 'Q') { l1.textContent = 'Capacitancia C (F)'; l2.textContent = 'Voltaje V (V)'; }
+    else { l1.textContent = 'Carga Q (C)'; l2.textContent = 'Capacitancia C (F)'; }
   }
 
   function updatePwLabels() {
     const m = getStr('pw-mode');
     const l1 = document.getElementById('pw-l1'), l2 = document.getElementById('pw-l2');
-    if (m === 'VI') { l1.innerText = 'Voltaje V (V)'; l2.innerText = 'Corriente I (A)'; }
-    else if (m === 'IR') { l1.innerText = 'Corriente I (A)'; l2.innerText = 'Resistencia R (Ω)'; }
-    else { l1.innerText = 'Voltaje V (V)'; l2.innerText = 'Resistencia R (Ω)'; }
+    if (m === 'VI') { l1.textContent = 'Voltaje V (V)'; l2.textContent = 'Corriente I (A)'; }
+    else if (m === 'IR') { l1.textContent = 'Corriente I (A)'; l2.textContent = 'Resistencia R (Ω)'; }
+    else { l1.textContent = 'Voltaje V (V)'; l2.textContent = 'Resistencia R (Ω)'; }
   }
 
-  // ── LOGICA DE CÁLCULO ──
   function calcOhm() {
     const t = getStr('ohm-target'), a = getNum('ohm-a'), b = getNum('ohm-b');
     if (isNaN(a) || isNaN(b)) return;
     let res, unit, formula;
-    if (t === 'V') { res = a * b; unit = 'V'; formula = `V = ${fmt(a)}A × ${fmt(b)}Ω`; }
-    else if (t === 'I') { res = a / b; unit = 'A'; formula = `I = ${fmt(a)}V / ${fmt(b)}Ω`; }
-    else { res = a / b; unit = 'Ω'; formula = `R = ${fmt(a)}V / ${fmt(b)}A`; }
+    if (t === 'V') { res = a * b; unit = 'V'; formula = `V = ${fmt(a)} A × ${fmt(b)} Ω`; }
+    else if (t === 'I') { res = a / b; unit = 'A'; formula = `I = ${fmt(a)} V ÷ ${fmt(b)} Ω`; }
+    else { res = a / b; unit = 'Ω'; formula = `R = ${fmt(a)} V ÷ ${fmt(b)} A`; }
     setResult('ohm-res','ohm-val','ohm-lbl', fmt(res) + ' ' + unit, formula);
   }
 
@@ -586,48 +659,49 @@
   function calcSerie() {
     const v = parseList('res-list'); if (!v.length) return;
     const r = v.reduce((a, b) => a + b, 0);
-    setResult('res-res','res-val','res-lbl', fmt(r) + ' Ω', `R_eq = ΣR = ${v.join(' + ')}`);
+    setResult('res-res','res-val','res-lbl', fmt(r) + ' Ω', `R_eq = ${v.join(' + ')} = ${fmt(r)} Ω`);
   }
 
   function calcParalelo() {
     const v = parseList('res-list'); if (!v.length) return;
     const r = 1 / v.reduce((a, b) => a + 1/b, 0);
-    setResult('res-res','res-val','res-lbl', fmt(r) + ' Ω', `R_eq = 1 / Σ(1/R)`);
+    setResult('res-res','res-val','res-lbl', fmt(r) + ' Ω', `R_eq (paralelo) = ${fmt(r)} Ω`);
   }
 
   function calcCoulomb() {
     const q1 = getNum('cou-q1'), q2 = getNum('cou-q2'), r = getNum('cou-r');
     if (isNaN(q1) || isNaN(q2) || isNaN(r) || r <= 0) return;
     const F = K * Math.abs(q1 * q2) / (r * r);
-    setResult('cou-res','cou-val','cou-lbl', fmt(F) + ' N', `F = k|q₁q₂|/r² | ${q1*q2 > 0 ? 'Repulsión' : 'Atracción'}`);
+    setResult('cou-res','cou-val','cou-lbl', fmt(F) + ' N',
+      `F = k|q₁q₂|/r²  →  ${q1*q2 > 0 ? 'Repulsión' : 'Atracción'}`);
   }
 
   function calcCampo() {
     const q = getNum('ce-q'), r = getNum('ce-r');
     if (isNaN(q) || isNaN(r) || r <= 0) return;
     const E = K * Math.abs(q) / (r * r);
-    setResult('ce-res','ce-val','ce-lbl', fmt(E) + ' N/C', `E = k|q|/r²`);
+    setResult('ce-res','ce-val','ce-lbl', fmt(E) + ' N/C', `E = k|q|/r² = ${fmt(E)} N/C`);
   }
 
   function calcMovPart() {
     const q = getNum('mp-q'), m = getNum('mp-m'), e = getNum('mp-e');
     if (isNaN(q) || isNaN(m) || isNaN(e) || m <= 0) return;
     const a = Math.abs(q) * e / m;
-    setResult('mp-res','mp-val','mp-lbl', fmt(a) + ' m/s²', `a = |q|E/m`);
+    setResult('mp-res','mp-val','mp-lbl', fmt(a) + ' m/s²', `a = |q|E/m = ${fmt(a)} m/s²`);
   }
 
   function calcPotencial() {
     const q = getNum('pot-q'), r = getNum('pot-r');
     if (isNaN(q) || isNaN(r) || r <= 0) return;
     const V = K * q / r;
-    setResult('pot-res','pot-val','pot-lbl', fmt(V) + ' V', `V = kq/r`);
+    setResult('pot-res','pot-val','pot-lbl', fmt(V) + ' V', `V = kq/r = ${fmt(V)} V`);
   }
 
   function calcEnergiaPot() {
     const q1 = getNum('ep-q1'), q2 = getNum('ep-q2'), r = getNum('ep-r');
     if (isNaN(q1) || isNaN(q2) || isNaN(r) || r <= 0) return;
     const U = K * q1 * q2 / r;
-    setResult('ep-res','ep-val','ep-lbl', fmt(U) + ' J', `U = kq₁q₂/r`);
+    setResult('ep-res','ep-val','ep-lbl', fmt(U) + ' J', `U = kq₁q₂/r = ${fmt(U)} J`);
   }
 
   function calcCap() {
@@ -637,40 +711,42 @@
     if (t === 'C') { res = a / b; unit = 'F'; }
     else if (t === 'Q') { res = a * b; unit = 'C'; }
     else { res = a / b; unit = 'V'; }
-    setResult('cap-res','cap-val','cap-lbl', fmt(res) + ' ' + unit, `C = Q/V → Resultado: ${fmt(res)}${unit}`);
+    setResult('cap-res','cap-val','cap-lbl', fmt(res) + ' ' + unit, `Resultado: ${fmt(res)} ${unit}`);
   }
 
   function calcEnCap() {
     const c = getNum('uc-c'), v = getNum('uc-v');
     if (isNaN(c) || isNaN(v)) return;
     const U = 0.5 * c * v * v;
-    setResult('uc-res','uc-val','uc-lbl', fmt(U) + ' J', `U = ½CV²`);
+    setResult('uc-res','uc-val','uc-lbl', fmt(U) + ' J', `U = ½CV² = ${fmt(U)} J`);
   }
 
   function calcCapSerie() {
     const v = parseList('capn-list'); if (!v.length) return;
     const c = 1 / v.reduce((a, b) => a + 1/b, 0);
-    setResult('capn-res','capn-val','capn-lbl', fmt(c) + ' F', `C_eq = 1/Σ(1/C)`);
+    setResult('capn-res','capn-val','capn-lbl', fmt(c) + ' F', `C_eq (serie) = ${fmt(c)} F`);
   }
 
   function calcCapPar() {
     const v = parseList('capn-list'); if (!v.length) return;
     const c = v.reduce((a, b) => a + b, 0);
-    setResult('capn-res','capn-val','capn-lbl', fmt(c) + ' F', `C_eq = ΣC`);
+    setResult('capn-res','capn-val','capn-lbl', fmt(c) + ' F', `C_eq (paralelo) = ${fmt(c)} F`);
   }
 
   function calcDivisor() {
     const vs = getNum('dv-vs'), r1 = getNum('dv-r1'), r2 = getNum('dv-r2');
     if (isNaN(vs) || isNaN(r1) || isNaN(r2) || r1+r2 === 0) return;
     const v2 = vs * r2 / (r1 + r2);
-    setResult('dv-res','dv-val','dv-lbl', fmt(v2) + ' V', `V₂ = Vs·R₂/(R₁+R₂)`);
+    setResult('dv-res','dv-val','dv-lbl', fmt(v2) + ' V',
+      `V₂ = ${fmt(vs)} × ${fmt(r2)} / (${fmt(r1)}+${fmt(r2)}) = ${fmt(v2)} V`);
   }
 
   function calcKVL() {
     const fem = getNum('kv-fem'), r1 = getNum('kv-r1'), r2 = getNum('kv-r2');
     if (isNaN(fem) || isNaN(r1) || isNaN(r2) || r1+r2 === 0) return;
     const I = fem / (r1 + r2);
-    setResult('kv-res','kv-val','kv-lbl', `I = ${fmt(I)} A`, `V_R1 = ${fmt(I*r1)}V | V_R2 = ${fmt(I*r2)}V`);
+    setResult('kv-res','kv-val','kv-lbl', `I = ${fmt(I)} A`,
+      `V_R1 = ${fmt(I*r1)} V  |  V_R2 = ${fmt(I*r2)} V  |  Σ = ${fmt(I*(r1+r2))} V`);
   }
 
   function calcPotencia() {
@@ -687,7 +763,7 @@
     const i = getNum('j-i'), r = getNum('j-r'), t = getNum('j-t');
     if (isNaN(i) || isNaN(r) || isNaN(t)) return;
     const q = i * i * r * t;
-    setResult('j-res','j-val','j-lbl', fmt(q) + ' J', `Q = I²Rt`);
+    setResult('j-res','j-val','j-lbl', fmt(q) + ' J', `Q = I²Rt = ${fmt(q)} J`);
   }
 
   function setRho() {
@@ -699,7 +775,8 @@
     const rho = getNum('rho-val'), l = getNum('rho-l'), a = getNum('rho-a');
     if (isNaN(rho) || isNaN(l) || isNaN(a) || a <= 0) return;
     const R = rho * l / a;
-    setResult('rho-res','rho-val2','rho-lbl', fmt(R) + ' Ω', `R = ρL/A`);
+    setResult('rho-res','rho-val2','rho-lbl', fmt(R) + ' Ω',
+      `R = ρL/A = ${fmt(rho)} × ${fmt(l)} / ${fmt(a)} = ${fmt(R)} Ω`);
   }
 </script>
 </body>
