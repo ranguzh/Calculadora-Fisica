@@ -11,10 +11,11 @@
 
 ---
 
-## 🎯 Vista previa
+
+## 🎯 Vista previa del proyecto
 
 <p align="center">
-  <img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif" width="600"/>
+  <img src="./assets/demo.png" width="800" style="border-radius:10px; box-shadow:0px 0px 20px rgba(0,0,0,0.4);"/>
 </p>
 
 ---
