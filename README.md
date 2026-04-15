@@ -15,9 +15,8 @@
 ## 🎯 Vista previa del proyecto
 
 <p align="center">
-  <img src="./assets/demo.png" width="800" style="border-radius:10px; box-shadow:0px 0px 20px rgba(0,0,0,0.4);"/>
+  <img src="Assets/Demo.png" width="800"/>
 </p>
-
 ---
 
 ## ⚡ Descripción
