@@ -8,23 +8,36 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy: #0a1628;
-      --navy2: #1a2d5a;
-      --blue-mid: #2a5a9a;
-      --blue-light: #7ab4e8;
-      --gold: #FFD700;
-      --text: #e8eef8;
-      --text-muted: #a0b4d0;
-      --card-bg: #111e36;
-      --card-border: #1e3560;
-      --input-bg: #0d1a30;
-      --result-bg: #0f2040;
-      --green: #27a060;
-      --amber: #ba7517;
-      --red: #a32d2d;
-      --radius: 10px;
-      --radius-sm: 6px;
-    }
+      --shadow-grey: #232528;
+      --carbon-black: #222222;
+      --deep-space-blue: #172A3A;
+      --mint-cream: #F0F7EE;
+      --white: #FFFFFF;
+
+      --navy: #121417;
+      --navy2: #1a1d21;
+
+      --blue-mid: #2a2d33;
+      
+      --gold: #a6a6a6;
+
+      --text: #f1f5f9;
+      --text-muted: #9aa3ad;
+
+      --card-bg: #1b1e22;
+      --card-border: #2a2d31;
+
+      --input-bg: #141618;
+
+      --result-bg: #1c1f24;
+
+     --green: #6f7a6f;
+     --amber: #8a7f6a;
+     --red: #7a5a5a;
+
+     --radius: 10px;
+     --radius-sm: 6px;
+}
 
     body {
       font-family: 'Segoe UI', system-ui, sans-serif;
@@ -54,13 +67,9 @@
     }
 
     header h1 {
-      color: var(--gold);
-      font-size: clamp(15px, 3vw, 20px);
-      font-weight: 600;
-      line-height: 1.4;
-      max-width: 700px;
-      margin: 0 auto 6px;
-    }
+  color: var(--text);
+  font-weight: 600;
+}
 
 
     /* ── LAYOUT ── */
@@ -95,12 +104,9 @@
 
     /* ── CARDS ── */
     .card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: var(--radius);
-      padding: 1.25rem;
-      margin-bottom: 1rem;
-    }
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+    }  
 
     .card h3 {
       font-size: 15px;
@@ -160,18 +166,9 @@
 
     /* ── BUTTONS ── */
     .btn {
-      width: 100%;
-      padding: 10px;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--blue-mid);
-      background: #1a3a6a;
-      color: var(--blue-light);
-      font-size: 14px;
-      cursor: pointer;
-      margin-top: 6px;
-      transition: background 0.15s;
-    }
-    .btn:hover { background: #1e4580; }
+  background: var(--deep-space-blue);
+  color: var(--mint-cream);
+}
 
     .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
 
