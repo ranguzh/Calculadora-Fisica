@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora Interactiva — Análisis de Circuitos Eléctricos y Conductividad de Materiales</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <div class="header-badge">Universidad Interamericana de Panamá — Facultad de Ingeniería</div>
+  <h1>Calculadora Interactiva para el Análisis de Circuitos Eléctricos y Conductividad de Materiales</h1>
+  <p>Semana del Ingeniero &nbsp;·&nbsp; Física II</p>
+</header>
+
+<div class="container">
+
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('ohm',this)">Ley de Ohm</div>
+    <div class="tab" onclick="showTab('coulomb',this)">Ley de Coulomb</div>
+    <div class="tab" onclick="showTab('campo',this)">Campo Eléctrico</div>
+    <div class="tab" onclick="showTab('potencial',this)">Potencial Eléctrico</div>
+    <div class="tab" onclick="showTab('capacitor',this)">Capacitores</div>
+    <div class="tab" onclick="showTab('kirchhoff',this)">Circuitos / Kirchhoff</div>
+    <div class="tab" onclick="showTab('potencia',this)">Potencia</div>
+    <div class="tab" onclick="showTab('materiales',this)">Conductividad</div>
+  </div>
+
+  <!-- ═══════════════ OHM ═══════════════ -->
+  <div class="panel active" id="panel-ohm">
+    <div class="card">
+      <h3>Ley de Ohm <span class="badge">Unidad VI</span></h3>
+      <div class="formula">V = I · R</div>
+
+      <div class="field">
+        <label>Calcular</label>
+        <select id="ohm-target" onchange="resetR('ohm-res')">
+          <option value="V">Voltaje (V)</option>
+          <option value="I">Corriente (A)</option>
+          <option value="R">Resistencia (Ω)</option>
+        </select>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label id="ohm-l1">Corriente (A)</label>
+          <input type="number" id="ohm-a" placeholder="ej: 2">
+        </div>
+        <div class="field">
+          <label id="ohm-l2">Resistencia (Ω)</label>
+          <input type="number" id="ohm-b" placeholder="ej: 5">
+        </div>
+      </div>
+
+      <button class="btn" onclick="calcOhm()">Calcular</button>
+
+      <div class="result" id="ohm-res">
+        <div class="result-value" id="ohm-val"></div>
+        <div class="result-label" id="ohm-lbl"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Resistencias en Serie y Paralelo <span class="badge">Unidad VI</span></h3>
+      <div class="formula">Serie: R_eq = R₁+R₂+... | Paralelo: 1/R_eq = Σ(1/Rᵢ)</div>
+
+      <div class="field">
+        <label>Resistencias separadas por coma (Ω)</label>
+        <input type="text" id="res-list" placeholder="ej: 10, 20, 30">
+      </div>
+
+      <div class="btn-row">
+        <button class="btn" onclick="calcSerie()">Serie</button>
+        <button class="btn" onclick="calcParalelo()">Paralelo</button>
+      </div>
+
+      <div class="result" id="res-res">
+        <div class="result-value" id="res-val"></div>
+        <div class="result-label" id="res-lbl"></div>
+      </div>
+    </div>
+  </div>  
+  <!-- ═══════════════ COULOMb ═══════════════ -->
+  <div class="panel" id="panel-coulomb">
+    <div class="card">
+      <h3>Ley de Coulomb <span class="badge">Unidad I</span></h3>
+      <div class="formula">F = k · |q₁ · q₂| / r²</div>
+
+      <div class="field-row">
+        <input type="number" id="cou-q1" placeholder="ej: 1e-6">
+        <input type="number" id="cou-q2" placeholder="ej: -2e-6">
+      </div>
+
+      <div class="field">
+        <input type="number" id="cou-r" placeholder="ej: 0.05">
+      </div>
+
+      <button class="btn" onclick="calcCoulomb()">Calcular fuerza</button>
+
+      <div class="result" id="cou-res">
+        <div class="result-value" id="cou-val"></div>
+        <div class="result-label" id="cou-lbl"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ CAMPO ═══════════════ -->
+  <div class="panel" id="panel-campo">
+    <div class="card">
+      <h3>Campo eléctrico — carga puntual <span class="badge">Unidad II</span></h3>
+      <div class="formula">E = k · |q| / r²</div>
+
+      <div class="field-row">
+        <input type="number" id="ce-q" placeholder="ej: 5e-9">
+        <input type="number" id="ce-r" placeholder="ej: 0.1">
+      </div>
+
+      <button class="btn" onclick="calcCampo()">Calcular E</button>
+
+      <div class="result" id="ce-res">
+        <div class="result-value" id="ce-val"></div>
+        <div class="result-label" id="ce-lbl"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Movimiento de partícula en campo uniforme <span class="badge">Unidad II</span></h3>
+      <div class="formula">a = |q| · E / m</div>
+
+      <div class="field-row">
+        <input type="number" id="mp-q" placeholder="ej: 1.6e-19">
+        <input type="number" id="mp-m" placeholder="ej: 9.11e-31">
+      </div>
+
+      <div class="field">
+        <input type="number" id="mp-e" placeholder="ej: 1000">
+      </div>
+
+      <button class="btn" onclick="calcMovPart()">Calcular aceleración</button>
+
+      <div class="result" id="mp-res">
+        <div class="result-value" id="mp-val"></div>
+        <div class="result-label" id="mp-lbl"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ POTENCIAL ═══════════════ -->
+  <div class="panel" id="panel-potencial">
+    <div class="card">
+      <h3>Potencial eléctrico — carga puntual <span class="badge">Unidad IV</span></h3>
+      <div class="formula">V = k · q / r</div>
+
+      <div class="field-row">
+        <input type="number" id="pot-q" placeholder="ej: 2e-9">
+        <input type="number" id="pot-r" placeholder="ej: 0.3">
+      </div>
+
+      <button class="btn" onclick="calcPotencial()">Calcular V</button>
+
+      <div class="result" id="pot-res">
+        <div class="result-value" id="pot-val"></div>
+        <div class="result-label" id="pot-lbl"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Energía potencial eléctrica <span class="badge">Unidad IV</span></h3>
+      <div class="formula">U = k · q₁ · q₂ / r</div>
+
+      <div class="field-row">
+        <input type="number" id="ep-q1">
+        <input type="number" id="ep-q2">
+      </div>
+
+      <div class="field">
+        <input type="number" id="ep-r">
+      </div>
+
+      <button class="btn" onclick="calcEnergiaPot()">Calcular U</button>
+
+      <div class="result" id="ep-res">
+        <div class="result-value" id="ep-val"></div>
+        <div class="result-label" id="ep-lbl"></div>
+      </div>
+    </div>
+  </div>
+
+  
+  
+</div>
+
+<footer>
+  Universidad Interamericana de Panamá · Facultad de Ingeniería y Arquitectura · Física II
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
+<!-- final -->
