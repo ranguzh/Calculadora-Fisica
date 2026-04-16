@@ -45,14 +45,3 @@ Permite calcular:
 
 </p>
 
----
-
-## 📐 Fórmulas
-
-```txt
-V = I · R
-F = k · |q₁q₂| / r²
-E = k · |q| / r²
-V = k · q / r
-P = V · I
-Q = I² · R · t
